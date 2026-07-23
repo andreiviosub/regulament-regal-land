@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulament — Regal Land RP</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#040302;
+  --void-deep:#020201;
+  --glass-1: rgba(24,18,12,.40);
+  --glass-2: rgba(30,23,15,.52);
+  --glass-3: rgba(255,255,255,.035);
+  --glass-border: rgba(230,197,140,.14);
+  --glass-border-strong: rgba(230,197,140,.30);
+  --glass-hi: rgba(255,255,255,.06);
+  --gold-deep:#7c531c;
+  --gold:#c68a2e;
+  --gold-bright:#e6b34d;
+  --gold-pale:#f3dfa9;
+  --ink:#f1e7d3;
+  --ink-bright:#fbf5e6;
+  --ink-dim:#b9a988;
+  --ink-faint:#8a7a5e;
+  --rust:#a8462e;
+  --rust-bright:#cf6a44;
+  --sage:#7c8f6a;
+  --shadow-glass: 0 24px 60px -22px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.05);
+  --shadow-glass-sm: 0 10px 30px -14px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.04);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--ink);
+  font-family:'Newsreader', Georgia, serif;
+  font-size:20px;
+  font-optical-sizing:auto;
+  line-height:1.66;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold-deep); color:var(--gold-pale);}
+
+/* ===== Ambient glow blobs behind the glass ===== */
+.bg-blobs{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
+.blob{position:absolute; border-radius:50%; filter:blur(95px);}
+.blob.b1{
+  width:640px; height:640px; top:-220px; left:-180px;
+  background:radial-gradient(circle at 32% 32%, rgba(230,179,77,.55), rgba(198,138,46,0) 70%);
+  animation:driftA 32s ease-in-out infinite alternate;
+}
+.blob.b2{
+  width:560px; height:560px; bottom:-220px; right:-160px;
+  background:radial-gradient(circle at 60% 40%, rgba(207,106,68,.38), rgba(168,70,46,0) 70%);
+  animation:driftB 38s ease-in-out infinite alternate;
+}
+.blob.b3{
+  width:460px; height:460px; top:38%; left:58%;
+  background:radial-gradient(circle at 50% 50%, rgba(198,138,46,.24), transparent 70%);
+  animation:driftC 44s ease-in-out infinite alternate;
+}
+.blob.b4{
+  width:380px; height:380px; top:8%; right:10%;
+  background:radial-gradient(circle at 50% 50%, rgba(124,143,106,.18), transparent 70%);
+  animation:driftA 50s ease-in-out infinite alternate-reverse;
+}
+@keyframes driftA{ from{transform:translate(0,0) scale(1);} to{transform:translate(50px,40px) scale(1.08);} }
+@keyframes driftB{ from{transform:translate(0,0) scale(1);} to{transform:translate(-40px,-50px) scale(1.06);} }
+@keyframes driftC{ from{transform:translate(0,0) scale(1);} to{transform:translate(-60px,30px) scale(.95);} }
+
+/* subtle grain, sits above blobs, below glass */
+body::after{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  opacity:.045; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+a{color:inherit;}
+h1,h2,h3,h4{font-family:'Rye', 'Source Serif 4', serif; font-weight:400; letter-spacing:.02em; margin:0;}
+
+/* ===== Focus visibility ===== */
+a:focus-visible, button:focus-visible, input:focus-visible{
+  outline:2px solid var(--gold-bright);
+  outline-offset:2px;
+}
+
+/* ===== Glass base ===== */
+.glass{
+  background:var(--glass-1);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass);
+}
+
+/* ===== Top bar ===== */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; gap:18px;
+  padding:14px 28px;
+  background:rgba(14,10,6,.42);
+  -webkit-backdrop-filter:blur(22px) saturate(160%);
+  backdrop-filter:blur(22px) saturate(160%);
+  border-bottom:1px solid var(--glass-border);
+  box-shadow:0 12px 30px -18px rgba(0,0,0,.7), inset 0 -1px 0 rgba(255,255,255,.03);
+}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none; flex-shrink:0;}
+.brand img{height:42px; width:42px; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));}
+.brand-text{display:flex; flex-direction:column; line-height:1.05;}
+.brand-text .name{font-family:'Rye',serif; font-size:19px; color:var(--gold-bright); letter-spacing:.03em;}
+.brand-text .sub{font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.18em; color:var(--ink-faint); text-transform:uppercase; margin-top:2px;}
+
+.topbar-search{
+  flex:1; max-width:560px; margin-left:auto;
+  position:relative;
+}
+.topbar-search input{
+  width:100%;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--glass-border);
+  border-radius:999px;
+  padding:11px 44px 11px 42px;
+  color:var(--ink);
+  font-family:'Newsreader', serif;
+  font-size:15.5px;
+  outline:none;
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  transition:border-color .15s, box-shadow .15s, background .15s;
+}
+.topbar-search input::placeholder{color:var(--ink-faint);}
+.topbar-search input:focus{
+  border-color:var(--gold);
+  background:rgba(255,255,255,.07);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 0 0 3px rgba(198,138,46,.16), 0 0 24px rgba(198,138,46,.12);
+}
+.topbar-search svg.icon-search{position:absolute; left:14px; top:50%; transform:translateY(-50%); width:16px; height:16px; stroke:var(--ink-faint); pointer-events:none;}
+.topbar-search .clear-btn{
+  position:absolute; right:8px; top:50%; transform:translateY(-50%);
+  background:none; border:none; color:var(--ink-faint); cursor:pointer;
+  width:28px; height:28px; border-radius:50%; display:none; align-items:center; justify-content:center;
+  font-size:16px;
+}
+.topbar-search .clear-btn:hover{color:var(--gold-bright); background:rgba(255,255,255,.06);}
+.topbar-search.has-value .clear-btn{display:flex;}
+
+.results-count{
+  font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); letter-spacing:.05em;
+  white-space:nowrap; display:none;
+}
+.results-count.show{display:block;}
+
+.menu-toggle{
+  display:none;
+  background:rgba(255,255,255,.05); border:1px solid var(--glass-border); border-radius:10px;
+  width:38px; height:38px; align-items:center; justify-content:center; color:var(--gold-bright); cursor:pointer;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+}
+
+/* ===== Layout ===== */
+.layout{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  align-items:start;
+  gap:24px;
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 24px;
+  position:relative;
+  z-index:1;
+}
+
+/* ===== Sidebar ===== */
+.sidebar{
+  position:sticky; top:90px;
+  height:auto;
+  max-height:calc(100vh - 90px - 24px);
+  overflow-y:auto;
+  margin:16px 0 24px;
+  padding:24px 14px 24px 20px;
+  border-radius:20px;
+  background:var(--glass-1);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  backdrop-filter:blur(22px) saturate(150%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass);
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--glass-border-strong); border-radius:3px;}
+
+.side-label{
+  font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink-faint); margin:0 0 10px 10px;
+}
+.side-nav{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:3px;}
+.side-nav a{
+  display:flex; align-items:center; gap:12px;
+  padding:11px 12px; border-radius:10px;
+  text-decoration:none; color:var(--ink-dim); font-size:17px;
+  border-left:2px solid transparent;
+  transition:background .15s, color .15s, border-color .15s;
+}
+.side-nav a .badge-count{
+  margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink-faint);
+  background:rgba(255,255,255,.05); padding:2px 8px; border-radius:999px;
+}
+.side-nav a:hover{background:rgba(255,255,255,.05); color:var(--gold-pale);}
+.side-nav a.active{color:var(--gold-bright); border-left-color:var(--gold); background:rgba(230,179,77,.10);}
+.side-nav a.active .badge-count{color:var(--gold-bright);}
+.side-nav .oct{
+  width:28px; height:28px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-size:21px; line-height:1;
+}
+
+/* ===== Main ===== */
+main{padding:0 0 100px; min-width:0;}
+
+/* Hero */
+.hero{margin:16px 0 48px;}
+.hero-panel{
+  position:relative; overflow:hidden;
+  padding:56px 48px;
+  border-radius:24px;
+  background:var(--glass-2);
+  -webkit-backdrop-filter:blur(28px) saturate(160%);
+  backdrop-filter:blur(28px) saturate(160%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass);
+}
+.hero-panel::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+}
+.hero .eyebrow{
+  font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:16px; display:flex; align-items:center; gap:10px;
+}
+.hero .eyebrow::before{content:""; width:26px; height:1px; background:var(--gold-deep);}
+.hero h1{
+  font-size:clamp(36px,5vw,58px); color:var(--gold-pale); line-height:1.08; margin-bottom:18px;
+  text-shadow:0 4px 24px rgba(198,138,46,.2);
+}
+.hero h1 span{color:var(--gold-bright);}
+.hero p.lead{
+  max-width:640px; color:var(--ink-dim); font-size:18px; line-height:1.7; margin-bottom:30px;
+}
+.hero-stats{display:flex; gap:0; flex-wrap:wrap;}
+.hero-stat{padding:0 28px; border-left:1px solid var(--glass-border);}
+.hero-stat:first-child{padding-left:0; border-left:none;}
+.hero-stat .num{font-family:'JetBrains Mono',monospace; font-size:26px; color:var(--gold-bright); font-weight:700;}
+.hero-stat .lbl{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin-top:2px;}
+
+/* Category section */
+.category{
+  margin-bottom:60px;
+  scroll-margin-top:110px;
+}
+.category-head{
+  display:flex; align-items:center; gap:16px; margin-bottom:8px; flex-wrap:wrap;
+}
+.cat-icon{
+  flex-shrink:0;
+  width:54px; height:54px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; line-height:1;
+  border-radius:16px;
+  background:rgba(230,179,77,.10);
+  border:1px solid var(--glass-border-strong);
+  box-shadow:var(--shadow-glass-sm);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+.category-head h2{font-size:30px; color:var(--gold-pale);}
+.category-head .cat-count{
+  font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint); letter-spacing:.05em;
+  transition:color .15s;
+}
+.group-count{
+  display:none; align-items:center;
+  font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.04em;
+  color:var(--gold-bright); background:rgba(230,179,77,.12); border:1px solid rgba(230,179,77,.32);
+  padding:2px 9px; border-radius:999px; white-space:nowrap;
+}
+.group-count.show{display:inline-flex;}
+
+/* ===== Search / filtered results mode ===== */
+body.is-searching .category-intro,
+body.is-searching .category-divider,
+body.is-searching .group-intro,
+body.is-searching .banner{display:none;}
+body.is-searching .category{margin-bottom:34px;}
+body.is-searching .category-head{margin-bottom:16px;}
+body.is-searching .group{margin-bottom:18px;}
+body.is-searching .category-head .cat-count{color:var(--gold-bright);}
+.category-intro{color:var(--ink-dim); font-size:16px; max-width:720px; margin:4px 0 28px;}
+.category-divider{
+  height:1px; margin:0 0 28px;
+  background:linear-gradient(90deg, var(--gold-deep), transparent 65%);
+}
+
+/* Group */
+.group{margin-bottom:32px; scroll-margin-top:110px;}
+.group-title{
+  display:flex; align-items:center; gap:10px;
+  font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:14px;
+}
+.group-title .line{flex:1; height:1px; background:var(--glass-border-strong);}
+.group-intro{
+  color:var(--ink-dim); font-size:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--glass-border);
+  border-left:3px solid var(--gold-deep);
+  border-radius:12px; padding:14px 18px; margin-bottom:16px;
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+}
+
+/* Rule glass panel + rows */
+.rules{
+  list-style:none; margin:0; padding:6px;
+  display:flex; flex-direction:column;
+  border-radius:18px;
+  background:rgba(14,10,6,.66);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid var(--glass-border-strong);
+  box-shadow:var(--shadow-glass);
+  overflow:hidden;
+}
+.rule{
+  position:relative;
+  display:flex; gap:14px; align-items:center;
+  padding:17px 20px 17px 24px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  transition:background .15s;
+}
+.rule:last-child{border-bottom:none;}
+.rule:hover{background:rgba(255,255,255,.045);}
+.rule.hidden{display:none;}
+.rule::before{
+  content:""; position:absolute; left:6px; top:17px; bottom:17px; width:3px; border-radius:3px;
+  background:var(--ink-faint);
+}
+.rule.type-interzis::before{background:var(--rust);}
+.rule.type-obligatie::before{background:var(--gold);}
+.rule.type-permis::before{background:var(--sage);}
+.rule.type-info::before{background:var(--ink-faint);}
+
+.badge{
+  flex-shrink:0; width:30px;
+  text-align:right;
+  font-family:'JetBrains Mono',monospace; font-weight:600; font-size:14px;
+  color:var(--ink-faint);
+  opacity:.8;
+  user-select:none;
+}
+.rule.type-interzis .badge{color:var(--rust-bright);}
+.rule.type-obligatie .badge{color:var(--gold);}
+.rule.type-permis .badge{color:var(--sage);}
+
+.rule-body{flex:1; min-width:0;}
+.rule-text{color:var(--ink-bright); font-size:20px; line-height:1.6; font-weight:450;}
+.rule-text mark{background:rgba(230,179,77,.4); color:var(--gold-pale); border-radius:3px; padding:0 2px;}
+
+/* Inline keyword highlights, in place of the old tag pills */
+.kw{border-radius:4px; padding:0 3px; margin:0 -1px;}
+.kw-penalty{color:var(--rust-bright); background:rgba(207,106,68,.15);}
+.kw-exception{color:var(--sage); background:rgba(124,143,106,.16); font-style:italic;}
+.kw-time{color:var(--gold-bright); background:rgba(230,179,77,.15); font-variant-numeric:tabular-nums;}
+.kw-term{
+  color:var(--gold-pale); background:transparent; padding:0;
+  font-variant:small-caps; letter-spacing:.02em;
+  border-bottom:1px dotted rgba(243,223,169,.5);
+}
+
+/* Banner / ribbon */
+.banner{
+  margin:20px 4px 4px;
+  display:flex; align-items:center; gap:14px;
+  padding:16px 22px;
+  border-radius:16px;
+  background:rgba(198,138,46,.10);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid rgba(230,179,77,.25);
+  box-shadow:var(--shadow-glass-sm);
+}
+.banner .star{
+  flex-shrink:0; width:30px; height:30px; color:var(--gold-bright);
+}
+.banner p{margin:0; font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.03em; color:var(--gold-pale); line-height:1.5;}
+.banner.danger{border-color:rgba(207,106,68,.35); background:rgba(168,70,46,.13);}
+.banner.danger .star{color:var(--rust-bright);}
+.banner.danger p{color:#e8c3b3;}
+.banner.note{background:rgba(124,143,106,.10); border-color:rgba(124,143,106,.3);}
+.banner.note .star{color:var(--sage);}
+.banner.note p{color:#d3ddc7;}
+
+/* No results */
+.no-results{
+  display:none; text-align:center; padding:70px 20px; color:var(--ink-faint);
+  margin:0 4px; border-radius:20px;
+  background:var(--glass-1);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass-sm);
+}
+.no-results.show{display:block;}
+.no-results .oct-big{
+  width:56px; height:56px; margin:0 auto 18px; color:var(--gold-deep);
+  display:flex; align-items:center; justify-content:center;
+  clip-path:polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  background:rgba(255,255,255,.04); border:1px solid var(--glass-border-strong);
+}
+.no-results h3{font-size:20px; color:var(--gold-pale); margin-bottom:8px;}
+.no-results p{font-size:14px;}
+
+/* Footer */
+.site-footer{
+  border-top:1px solid var(--glass-border);
+  margin-top:40px; padding:26px 6px; color:var(--ink-faint); font-size:12.5px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+.site-footer strong{color:var(--gold);}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay{
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:40;
+  -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+}
+
+/* ===== Responsive ===== */
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr; padding:0 16px;}
+  .sidebar{
+    position:fixed; top:0; left:0; height:100vh; width:305px; z-index:60;
+    margin:0; border-radius:0 20px 20px 0;
+    transform:translateX(-100%); transition:transform .22s ease; padding-top:88px;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-overlay.open{display:block;}
+  .menu-toggle{display:flex;}
+  main{padding:0 0 80px;}
+  .topbar{padding:12px 16px;}
+  .brand-text .name{font-size:16px;}
+  .results-count{display:none !important;}
+  .hero-panel{padding:40px 26px;}
+}
+@media (max-width:600px){
+  .hero-panel{padding:32px 20px; border-radius:18px;}
+  .hero-stats{gap:0; row-gap:14px;}
+  .hero-stat{padding:0 18px;}
+  .rule{padding:15px 16px 15px 22px;}
+  .cat-icon{width:44px; height:44px; font-size:21px; border-radius:13px;}
+  .category-head h2{font-size:25px;}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none !important;}
+  .blob{animation:none !important;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg-blobs" aria-hidden="true">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+  <span class="blob b4"></span>
+</div>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<header class="topbar">
+  <button class="menu-toggle" id="menuToggle" aria-label="Deschide meniul">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <a href="#top" class="brand">
+    <img src="logo.png" alt="Regal Land">
+    <div class="brand-text">
+      <span class="name">REGAL LAND</span>
+      <span class="sub">Regulament RedM</span>
+    </div>
+  </a>
+  <div class="topbar-search" id="searchWrap">
+    <svg class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="Caută o regulă… (ex: jaf, lasou, zonă verde)" autocomplete="off">
+    <button class="clear-btn" id="clearBtn" aria-label="Șterge căutarea">✕</button>
+  </div>
+  <span class="results-count" id="resultsCount"></span>
+</header>
+
+<div class="layout" id="top">
+  <aside class="sidebar" id="sidebar">
+    <p class="side-label">Categorii</p>
+    <ul class="side-nav" id="sideNav"></ul>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div class="hero-panel">
+        <div class="eyebrow">Server RedM · Old West Roleplay</div>
+        <h1>Regulamentul <span>Regal Land</span></h1>
+        <p class="lead">Toate regulile serverului, structurate pe roluri și situații, ca să găsești rapid exact ce cauți. Folosește bara de căutare din partea de sus sau navighează prin categorii din stânga.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num" id="statCats">0</div><div class="lbl">Categorii</div></div>
+          <div class="hero-stat"><div class="num" id="statRules">0</div><div class="lbl">Reguli</div></div>
+          <div class="hero-stat"><div class="num">OOC</div><div class="lbl">= în afara jocului</div></div>
+          <div class="hero-stat"><div class="num">IC</div><div class="lbl">= în joc</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="content"></div>
+
+    <div class="no-results" id="noResults">
+      <div class="oct-big">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </div>
+      <h3>Nicio regulă găsită</h3>
+      <p>Încearcă alt termen de căutare sau șterge filtrul.</p>
+    </div>
+
+    <footer class="site-footer">
+      <span>© Regal Land RP — Regulament oficial al serverului RedM.</span>
+      <span>Nerespectarea regulilor <strong>se pedepsește</strong> conform prevederilor de mai sus.</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const DATA = [
+{
+  id:'general', title:'Regulament General', icon:'📋',
+  intro:'Regulile de bază valabile pentru toți jucătorii, indiferent de facțiune sau job — de la comportamentul în chat, la jafuri, arme și zonele sigure ale orașelor.',
+  groups:[
+    { title:'Reguli generale', rules:[
+      'Este strict interzis să folosești scrierea codificată ("în chineză") pentru cuvinte pe care nu ai voie să le rostești in-character, precum Discord, Facebook etc.',
+      'Este strict interzis să faci roleplay de persoană surdo-mută sau oarbă.',
+      'Este strict interzis să dai disconnect din roleplay pentru a evita consecințele unei acțiuni.',
+      'Este strict interzis să folosești informații OOC aflate pe Discord în roleplay (IC).',
+      'Este strict interzis să abuzezi de bug-uri sau defecțiuni din joc în avantaj propriu. Acest lucru va fi aspru sancționat.',
+      'Este strict interzis să vinzi sau să cumperi bunuri IC cu bani proveniți din OOC. Acest lucru va fi aspru sancționat.',
+      'Este strict interzis să plantezi orice fel de semințe în orașe sau pe alte proprietăți care nu îți aparțin. Se pedepsește cu ban permanent.',
+      'Este strict interzis să faci alianțe pentru a ataca poliția sau evenimentele organizate.',
+      'Este strict interzis să execuți un jucător ("cap spart") imediat ce ți-ai pus ținta pe el, fără un roleplay corespunzător.',
+      'Este strict interzis să porți discuții OOC în IC (chat in-character).',
+      'Este strict interzis revenge-kill-ul: să te respawnezi și să te întorci la locul respectiv pentru a omorî persoana care te-a omorât anterior.',
+      'Este strict interzis să deschizi tichet în timpul unui roleplay, indiferent cine a greșit. Finalizați roleplay-ul și abia după aceea puteți face tichet.',
+      'Este strict interzis să recunoști un jucător mascat după voce.',
+      'Este strict interzis să deranjezi o acțiune a poliției aflată în desfășurare.',
+      'Este strict interzis să omori sau să ceri taxă pe o locație ilegală care nu îți aparține. Excepție: mafia.',
+      'Este strict interzis să tratezi roleplay-ul ca fiind ceva personal.',
+      'Este strict interzis să înjuri sau să fii înjurat de morți, familie sau copii. Excepție: când ești răpit sau când rolezi frica.',
+      'Este strict interzis să jefuiești între orele 08:00–22:00 (ora IC).',
+      'Orice tichet legat de agresiuni verbale sau fizice, fără dovadă video sau martori IC, nu va fi luat în considerare.',
+      'Armele speciale (Rolling, Carcano) pot fi folosite de oricine.',
+      'Armele speciale confiscate sau capturate (furate) pot fi folosite de oricine.',
+      'Armele de poliție găsite asupra cetățenilor care nu fac parte din poliție pot fi confiscate și puse în inventarul poliției, cu dosar și amendă.',
+      'Este strict interzis să aveți în oraș (zona verde) mai mult de 2 arme de foc. Dacă sunteți percheziționați și se găsesc mai mult de 2 arme, acestea vor fi reținute de poliție.',
+      'Este strict interzis să te bagi într-un roleplay în care nu ești bine primit.',
+      'Atenție! Cetățenii care dețin afaceri în orașe pot fi agresați de mafie.',
+      'No fear — exemplu: dacă ai rămas singur pe câmp, ai voie să fugi sau să tragi, dar dacă ai fost prins în lasou și ai o armă îndreptată spre tine, nu ai voie să te dezlegi. Dacă ești singur, fără bandă, și nu îți este frică să te bați, poți să te baţi liniștit — dar dacă cineva te prinde în lasou și ține arma spre tine, nu ai voie să te dezlegi.',
+      'Jaf la morminte: toată acțiunea trebuie să se desfășoare în zona cimitirului/bisericii, lângă scaunele de lângă sicriu. Este strict interzis să sapi și apoi să te ascunzi în afara zonei pentru a trage în poliție.',
+      'Poliția are dreptul să ridice jefuitorii implicați după un jaf bancar sau de magazin și să continue roleplay-ul. Excepție: pe câmp, unde trebuie prinși în viață.',
+      'Indienii au voie în oraș.',
+      'Dacă liderul unei bande, mafii sau trib indian este reținut de poliție, ceilalți membri pot ataca transportul poliției și pot încerca să îl elibereze.',
+      'La mina de la Little Creek, doctorul nu răspunde la telegramă dacă ați căzut în crater — nici robotul nu va răspunde. Trebuie să vă dați respawn.',
+      'Jaf: bancă — minimum 10 persoane; magazin — minimum 3 persoane.',
+      'Este strict interzis să jefuiți sau să tâlhăriți o persoană de unul singur — trebuie să fiți minimum 2: unul ține arma pe victimă, iar celălalt poate fura.',
+      'Taberele și corturile nu pot fi atacate — se consideră proprietăți private.',
+      'Este strict interzis power gaming-ul.',
+      'Este strict interzis să jefuiți pe zona verde din orașe sau pe câmp în afara intervalului orar permis. Se pedepsește inclusiv OOC.',
+      'Tureta este interzisă — ban pe loc.',
+      'Este strict interzis să jefuiți cu 15 minute înainte de restart și după restart.',
+      'Este strict interzis să faceți roleplay de psihopat.',
+      'Dacă dați jaf la bancă sau magazin și acolo se află deja alți bandiți, vă puteți bate sau jefui între voi — poliția are voie să intervină.',
+      'Bandele trebuie să fie la o distanță de 1 km de oraș. Exemplu: pentru Blackwater, distanța se măsoară până la copacul de sus.',
+      'Nu aveți voie să campați la ieșirile din oraș, mai exact acolo unde se termină zona verde.',
+      'Nu aveți voie să trageți în jucătorul care folosește telecabina — se pedepsește cu ban.',
+      'Cetățenii au obligația să aibă asupra lor actul de identitate. Dacă sunteți opriți de poliție și nu îl aveți, puteți fi reținuți, percheziționați sau amendați.',
+      'Este strict interzis să plantați în afara proprietății, pe drumuri sau pe alte proprietăți la care nu aveți acces. Se pedepsește cu ban.',
+      'Este strict interzis să jefuiți căruțele din orașe sau din afara orașelor dacă nu este în intervalul orar permis.',
+      'Licitațiile pentru case sau afaceri se țin doar IC.',
+      'Facțiunile trebuie să fie conectate pe voce în mod deafen. Cine este pe voce meta se pedepsește cu ban.',
+      'Bandele, mafiile și indienii au obligația să dea staff-ului Regal Land acces full pe Discord, doar pentru a se evita meta-ul.',
+      'Se pedepsește cu ban permanent orice dovadă care te acuză de înțelegeri OOC pentru avantaje IC.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban! Orice regulă interpretată în avantajul dumneavoastră poate fi sancționată.'}},
+
+    { title:'Zone verzi', rules:[
+      'Este strict interzis să te bați cu alți jucători, să omori sau să legi pe cineva cu lasoul.',
+      'Este interzis să urmărești un jucător în zona verde și să ai un comportament toxic față de acesta.',
+      'Este strict interzis să jefuiești un jucător în zona verde.',
+      'Este obligatoriu să rolezi frică de poliție în zona verde și să ai un comportament cât mai respectuos și civilizat.',
+      'Când ești urmărit de oameni înarmați, este strict interzis să intri în zona verde.',
+      'În zona verde trebuie să te comporți cât mai civilizat, cuminte, fără să creezi probleme.',
+      'Este strict interzis să ai în oraș (zona verde) mai mult de 2 arme de foc. Dacă ești percheziționat și se găsesc mai mult de 2, vor fi reținute de poliție. Lasoul și cuțitul sunt considerate arme.',
+      'Toate gările și grajdurile din afara orașelor respectă regulamentul zonei verzi.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+
+    { title:'Guarma și dispoziții diverse', rules:[
+      'Este strict interzis să jefuiți pe toată Guarma, indiferent de oră.',
+      'Poliția poate face razii de percheziție în afara zonei verzi. Odată intrat în zona verde, jucătorul nu poate fi atins, decât dacă nu se oprește, caz în care este nevoie de dovadă video OOC.',
+      'Bandele nu au voie să se lupte între ele, doar cu poliția.',
+      'Medicul nu poate fi rănit, indiferent de oră.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+
+    { title:'Alarma generală (sirenele de război)', rules:[
+      'În cazul în care auziți sirenele în orașe, trebuie să vă adăpostiți în locuri sigure unde puteți închide ușa — eventual case personale sau secția de poliție. Aveți la dispoziție 10 minute OOC pentru a vă adăposti.',
+      'Veți putea ieși din case sau adăposturi speciale doar când sirenele se opresc.',
+      'Nu se știe cât durează alarma, așa că aveți grijă să vă adăpostiți în locuri cu resurse de mâncare, apă etc.',
+      'Odată ce ați ieșit afară, puteți fi împușcat de oricine, indiferent dacă este polițist, mafiot sau bandit.',
+      'Dacă cineva intră peste voi în casă sau adăpost, puteți fi jefuiți și omorâți de mai multe ori, chiar și după respawn.',
+    ]},
+
+    { title:'Tichete (tickets) și sancțiuni', rules:[
+      'Este strict interzis să înjurați la tichete. Se pedepsește cu ban 1 zi.',
+      'Este strict interzis să interveniți într-un tichet care nu este al vostru. Se pedepsește cu ban 1 zi — orice tichet trebuie să fie privat.',
+      'Este strict interzis să scrieți pe chat că ați făcut tichet. Timpul de așteptare obligatoriu în locul unde ați făcut tichetul este de până la 10–15 minute; dacă nu vă aflați acolo, tichetul se consideră închis.',
+      'Orice tip de amenințare la adresa altor jucători cum că vor părăsi serverul se pedepsește cu ban 3 zile.',
+      'În cazul în care nu sunt admini online, vă rugăm să faceți tichet pe Discord.',
+    ], banner:{type:'note', text:'Banurile pornesc de la minimum 1 zi și pot ajunge până la 7 zile.'}},
+
+    { title:'Character Kill (CK)', intro:'Character Kill înseamnă că personajul unui jucător este șters, iar acesta trebuie să înceapă cu un personaj nou — practic, un roleplay diferit de cel anterior.', rules:[
+      'Corupție ca polițist, medic sau militar — de exemplu, furt din inventarul poliției sau al cetățenilor.',
+      'Sinucidere: te arunci de pe o clădire sau stâncă înaltă, sari în cascadă, sau te împușcă un prieten ori un membru de bandă pentru a evita jaful sau arestarea. Dacă există martori, se consideră CK.',
+      'Trădarea unei bande, dacă liderul decide să îți dea CK.',
+      'Când ești împușcat și folosești /me moare sau orice descrie răni foarte grave ori moarte.',
+      'Când ești în arest și amenințați polițiștii cu moartea.',
+      'Când ești amenințat cu moartea și faci no-fear sau îți ceri singur moartea.',
+    ]},
+    { title:'După Character Kill sunt interzise', rules:[
+      'Să mai intri în banda sau facțiunea din care făceai parte.',
+      'Să mai folosești același nume sau poreclă.',
+      'Să continui roleplay-urile pe care le aveai — trebuie să uiți tot și să iei totul de la capăt.',
+    ]},
+
+    { title:'Disconnect în roleplay', rules:[
+      'Disconnect în roleplay înseamnă deconectarea intenționată din joc pentru a evita consecințele unei acțiuni sau ale unui conflict aflat în desfășurare.',
+      'Exemplu: dacă intenționați să comiteți ilegalități sau le comiteți, vine raidul poliției și dați disconnect — este disconnect în RP.',
+      'Exemplu: când ești implicat într-o acțiune cu una sau mai multe persoane și dai disconnect — este disconnect în RP.',
+    ], banner:{type:'danger', text:'Aceste încălcări se pedepsesc cu ban!'}},
+
+    { title:'Înfățișarea personajului', rules:[
+      'Nu ai voie să îți schimbi hainele, părul sau barba în urma unui jaf.',
+      'Nu ai voie să îți schimbi părul sau barba într-un timp mai scurt de 24 de ore OOC dacă ești căutat.',
+      'Îți poți schimba părul sau barba după 24 de ore, dacă ai fost implicat în roleplay-uri în care înfățișarea ta este importantă.',
+    ], banner:{type:'danger', text:'Acest lucru se pedepsește inclusiv OOC cu ban!'}},
+
+    { title:'Comportament față de fete', rules:[
+      'Este strict interzis să ai un comportament neadecvat cu fetele pe care nu le cunoști.',
+      'Este strict interzis să le jignești fără motiv.',
+      'Este strict interzis să folosești un limbaj scârbos fără un motiv bine întemeiat, bazat pe un roleplay.',
+      'Este strict interzis să le amenințați fără motiv.',
+      'Este strict interzis să le urmăriți fără motiv de roleplay.',
+    ], banner:{type:'danger', text:'Aceste încălcări de regulament se pedepsesc cu ban de până la 7 zile!'}},
+  ]
+},
+
+{
+  id:'politie', title:'Regulament Poliție', icon:'👮',
+  intro:'Reguli de conduită, dotare și proceduri pentru ofițerii de poliție — de la ierarhie și raidul asupra fermelor, până la comportamentul față de cetățeni.',
+  groups:[
+    { title:'Reguli generale', rules:[
+      'Trebuie să asculți și să respecți gradele mai mari.',
+      'Este interzis, când intri în tură, să schimbi uniforma cu îmbrăcăminte civilă (mufti/RC). Se pedepsește OOC cu -1 grad.',
+      'Trebuie să folosești doar armele, caii și gloanțele din dotarea poliției.',
+      'Se pedepsește OOC cu ban direct confiscarea sau vânzarea armelor care nu sunt puse în inventarul poliției.',
+      'Dacă te simți deranjat de un coleg și vrei să faci o reclamație, vorbește cu gradul cel mai mare din poliție.',
+      'Aveți obligația ca, atunci când un cetățean vine să depună o reclamație, să îl tratați cu respect, nu să îl luați la mișto.',
+      'Aveți obligația să vă adresați colegilor sau gradelor mai mari cu apelative precum: domnule mareșal, domnule șerif, domnule locotenent etc.',
+      'Dacă urmăriți un jucător și acesta nu folosește arme de foc, aveți obligația să trageți un foc de avertisment în sus înainte să îl reținet.',
+      'Dacă o persoană îndreaptă arma spre voi, puteți deschide focul indiferent de zonă. Excepție: pe câmp, unde trebuie să se roleze frica.',
+      'Puteți percheziționa persoanele cu fața acoperită, în orice zonă.',
+      'Dacă ați reținut persoane mai violente verbal, nu trebuie să răspundeți în același mod.',
+      'Raziile sunt permise la fiecare 2 ore IC.',
+      'Orice tip de razie trebuie să fie format din minimum 5 polițiști.',
+      'Dacă demisionați, este strict interzis să păstrați orice bun din poliție — odată ce nu mai faceți parte din poliție, bunurile trebuie înapoiate.',
+      'Când sunteți on-duty, este strict interzis să faceți alte joburi.',
+      'Este strict interzis să faceți lucruri ilegale — trafic, produse, contrabandă. Se pedepsește OOC.',
+      'Promovările se vor face o dată la 2–3 săptămâni, în funcție de activitate și comportament.',
+      'Căruța cu mitralieră poate fi scoasă doar în următoarele situații: roleplay-uri speciale, la ieșirile din oraș, transporturi speciale.',
+      'Raziile fermelor sau caselor se pot face doar în urma unor dovezi clare IC, în prezența unui mareșal.',
+      'Dosarul cu dovezi de incriminare îl face șeriful, iar pentru eliberarea unui mandat de percheziție a proprietăților este nevoie doar de mareșal.',
+      'Când rețineți o persoană, aveți obligația să vă prezentați — de exemplu: „Bună ziua, sunt șeriful Ion Petrescu din cadrul poliției Blackwater, îmi puteți prezenta un buletin?”',
+      'Vânzarea echipamentelor din dotarea poliției se pedepsește OOC.',
+      'Raziile pe câmp se vor face în echipamentul din dotarea poliției.',
+      'Este strict interzis, cât timp purtați uniforma, să faceți glume deplasate între voi sau cu cetățenii.',
+      'În cazul unui jaf pe câmp, la magazin sau la bancă, secția respectivă trebuie să participe cu maximum 10 membri. Excepție: patrulele, unde pot fi prezenți până la 15 membri.',
+      'Se poate da lasou din orice poziție.',
+      'Poliția are dreptul să ridice jefuitorii implicați după un jaf bancar sau de magazin și să continue roleplay-ul. Excepție: pe câmp, unde trebuie prinși în viață.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+  ]
+},
+
+{
+  id:'bande', title:'Regulament Bande', icon:'💀',
+  intro:'Condiții de înființare, numărul de membri, jafuri, teritorii și conduita bandelor din Regal Land.',
+  groups:[
+    { title:'Reguli generale', rules:[
+      'Pentru înființarea unei bande este obligatoriu ca liderul să dețină o proprietate și o afacere legală.',
+      'Se poate da lasou din orice poziție.',
+      'În luptele pe câmp este permis no-fear.',
+      'Jaful la bancă sau magazin este permis o singură dată pe zi, doar când este zi afară.',
+      'O bandă poate avea maximum 15 membri; doar 10 pot fi prezenți la activități de tip camp sau jaf. Excepție: zona roșie, unde pot fi prezenți 15 membri.',
+      'Este strict interzis ca o bandă să dea afară un membru fără să îi acorde CK.',
+      'În cazul unei percheziții pe proprietate, aveți posibilitatea să vă opuneți.',
+      'Liderul bandei are obligația să aducă tribut sindicatului o dată pe săptămână, în funcție de ce vi se cere.',
+      'Este strict interzis să aveți în oraș (zona verde) mai mult de 2 arme de foc. Dacă sunteți percheziționați și se găsesc mai mult de 2, vor fi reținute de poliție, cu posibilitate de răscumpărare. Atenție: cuțitul și lasoul nu sunt considerate arme de foc, dar nu aveți voie să le folosiți în oraș.',
+      'Aveți voie să folosiți limbaj colorat în timp ce jefuiți o persoană. Atenție: acest limbaj nu trebuie să conțină jigniri la adresa familiei, morților etc., doar despre cel capturat — injuriile se pedepsesc cu ban permanent.',
+      'Dacă vă aflați pe zona roșie și un cetățean nu rolează frica, iar ulterior îl omorâți, aveți voie să îl jefuiți de bani și aur — orice alt obiect este strict interzis. Se pedepsește OOC.',
+      'Dacă liderul unei bande, mafii sau trib indian este reținut de poliție, ceilalți membri pot ataca transportul poliției și pot încerca să îl elibereze.',
+      'Jaful la bancă sau magazin trebuie să se desfășoare în interiorul clădirii sau în clădirea de vizavi.',
+      'Nu mai trageți în alte orașe ca să dați alarme false poliției, iar apoi să vindeți în alt oraș. Se pedepsește OOC cu ban 2 zile — asta nu este roleplay, ci un mod de a strica jocul celorlalți.',
+      'Membrii bandei nu au voie să jefuiască NPC-uri din orașe sau alți jucători fără roleplay corespunzător.',
+      'În orice zonă verde nu aveți dreptul să jigniți, să jefuiți sau să vă opuneți atunci când poliția vrea să facă o percheziție sau un control de rutină.',
+      'Dacă nu știți să dați lockpick, rămâneți acolo până ajunge poliția — nu fugiți, trebuie să închideți roleplay-ul.',
+      'Este strict interzis să dați jaf la magazin sau bancă imediat după respawn.',
+      'Este strict interzis să dați jaf la bancă sau magazin pe tot timpul nopții.',
+      'În timpul unei acțiuni, aveți obligația să fiți pe Discord în mod deafen.',
+      'Este strict interzis să atacați Wapitti (zona indienilor) pe timpul zilei.',
+      'Bandele trebuie să fie la o distanță de 1 km de oraș. Exemplu: pentru Blackwater, distanța se măsoară până la copacul de sus.',
+      'Nu aveți voie să campați la ieșirile din oraș, mai exact acolo unde se termină zona verde.',
+      'Profanarea de morminte, în zona cimitirelor, este permisă doar cu armele: pistol, lasou, cuțit, topor, ciocan.',
+      'Jaf magazin, bancă sau cimitir: dacă ați omorât poliția, aveți grijă — mafia din oraș poate interveni și puteți fi atacați. Dacă poliția câștigă, totul se termină.',
+      'Este obligatoriu ca orice angajat pe care vreți să îl introduceți în bandă să treacă prin afacerea legală minimum 5 zile — nu puteți adăuga pe cineva direct în bandă. Se sancționează inclusiv OOC.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+  ]
+},
+
+{
+  id:'mafie', title:'Regulament Mafie', icon:'💼',
+  intro:'Reguli despre înființarea mafiei, protecție, teritorii, activitate ilegală nocturnă și relația cu poliția și bandele.',
+  groups:[
+    { title:'Reguli generale', rules:[
+      'Un membru care vrea să înființeze o mafie trebuie să dețină o casă și o afacere legală într-un oraș.',
+      'Mafia nu poate avea mai mult de 10 membri prezenți la activități de oraș; ca număr total, pot fi 15.',
+      'Activitățile ilegale ale mafiei se vor desfășura doar în interiorul orașului, între orele 22:00–08:00.',
+      'Mafia poate fi recunoscută după haine — poliția are dreptul să îi rețină și să le facă dosar în desfășurare, până când vor exista dovezi suficiente. Dacă există suficiente probe IC, pot fi acuzați și trimiși la închisoare.',
+      'Nu au voie să facă alianțe cu bandele.',
+      'Teritorii: se pot ataca doar cu o persoană de față din sindicat, care va fi martorul bătăliei. Dacă o mafie atacă altă mafie din alt oraș și pierde bătălia, trebuie să plătească o taxă de protecție de 2000$, plus 500$ membrului din sindicat.',
+      'Mafia are voie să intimideze proprietarii de magazine sau afaceri prin răpire, jefuire și bătaie. Dacă proprietarul este dispus să plătească taxa de protecție, aceasta nu poate depăși 100$ pe săptămână; odată plătită, nu aveți voie să îl luați la mișto. Trebuie demonstrat cu probe video de unde aveți informația că victima este proprietarul afacerii.',
+      'Mafia are voie să sape în cimitir, dar dacă se va intersecta cu membrii unei bande, poate fi atacată. Dacă prind un bandit în lasou, îl pot jefui — valabil și invers, dacă un bandit prinde un mafiot.',
+      'Poliția poate interveni în bătaie.',
+      'Magazinele aflate sub protecția mafiei, dacă sunt atacate de bande și poliția moare sau nu este prezentă la jaf, pot interveni pentru a-și apăra locația. Dacă jaful se pierde, taxa de protecție integrală nu se mai plătește la finalul săptămânii.',
+      'Dacă poliția este prezentă, mafia nu are voie să intervină până nu moare și ultimul polițist. Șeful mafiei trebuie să asiste singur; restul trebuie să aștepte până când el se întoarce și confirmă că este ok să atace.',
+      'Dacă poliția câștigă, totul se termină.',
+      'Dacă, în timpul unui jaf, mafia prinde în lasou 1–2 bandiți, au voie să îi jefuiască.',
+      'Nu aveți voie să atacați în zona verde cetățenii care nu dețin o afacere.',
+      'Dacă liderul unei bande, mafii sau trib indian este reținut de poliție, ceilalți membri pot ataca transportul poliției și pot încerca să îl elibereze.',
+      'Dacă nu știți să dați lockpick, rămâneți acolo până ajunge poliția — nu fugiți, trebuie să închideți roleplay-ul.',
+      'La jafurile din oraș sau din cimitir, dacă se aud focuri de armă, liderul sau co-liderul se va duce să supravegheze de la distanță bătălia dintre poliție și bandă; restul membrilor trebuie să aștepte până când el se întoarce și confirmă că este ok să atace.',
+      'Este obligatoriu ca orice angajat pe care vreți să îl introduceți în mafie să treacă prin afacerea legală minimum 5 zile — nu puteți adăuga pe cineva direct în afacere. Se sancționează inclusiv OOC.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+  ]
+},
+
+{
+  id:'indieni', title:'Regulament Indieni', icon:'🏹',
+  intro:'Reguli specifice tribului indian — armament, accesul în oraș, mine și interacțiunea cu poliția.',
+  groups:[
+    { title:'Reguli generale', rules:[
+      'Este strict interzis să folosiți arme de foc.',
+      'Aveți voie în orașe — vă rugăm să aveți un comportament decent; dacă poliția vă cere un control de rutină, supuneți-vă organelor de stat. Fără glume cu ceilalți cetățeni, bătăi sau lasouri.',
+      'Este strict interzis să vă faceți tichet ca să fiți arestați și lăsați într-o celulă din secțiile orașelor.',
+      'Este strict interzis să intrați și să minați în minele legale.',
+      'O persoană care are buletin pentru că deține o proprietate sau afacere poate fi trimisă la Sisika.',
+      'Nu aveți voie, pe zona verde, să jefuiți cetățenii.',
+      'Dacă pe câmp vreți să prindeți un cetățean și acesta nu rolează frică, iar ulterior îl omorâți, îl puteți jefui doar de bani și aur, fără alte obiecte.',
+      'Dacă liderul unei bande, mafii sau trib indian este reținut de poliție, ceilalți membri pot ataca transportul poliției și pot încerca să îl elibereze.',
+      'Dacă nu știți să dați lockpick, rămâneți acolo până ajunge poliția — nu fugiți, trebuie să închideți roleplay-ul.',
+      'Sunteți obligați să aveți buletin, odată ce dețineți o proprietate sau o afacere.',
+      'Aveți voie în oraș, dar fără arme de foc — doar arcul, purtat pe spate.',
+      'Aveți voie pe câmp seara, dar puteți fi recunoscuți de un polițist, dacă acesta nu a murit.',
+      'Pe câmp și în Wapitti aveți voie să folosiți arme de foc.',
+      'Este strict interzis, în zona verde, ca un indian să folosească sau să aibă asupra sa o armă de foc.',
+      'Dacă un indian este surprins în oraș cu armă de foc, poliția are dreptul să percheziționeze persoana și să rețină armele.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+  ]
+},
+
+{
+  id:'medici', title:'Regulament Medici', icon:'⚕️',
+  intro:'Îndatoririle medicilor umani și ale doctorilor veterinari — imunitate, prețuri, program și limite de intervenție.',
+  groups:[
+    { title:'Medic uman', rules:[
+      'Este strict interzis să transportați lucruri ilegale din zonele rău famate. Se pedepsește OOC.',
+      'Aveți obligația să respectați gradele mai mari.',
+      'Problemele colective se discută cu un director — este strict interzis să vă faceți dreptate singuri.',
+      'Este strict interzis să fiți on-duty fără uniformă. Se pedepsește OOC.',
+      'Nu aveți voie să faceți alte joburi în timp ce sunteți on-duty.',
+      'Este strict interzis să favorizați jucătorii în timpul unei bătălii.',
+      'În timpul unui jaf este strict interzis să interveniți — puteți face acest lucru doar când nu se mai aud împușcături.',
+      'Când mergeți pe câmp și vedeți un bandit sau un polițist care vă roagă să îi ajutați colegii, aveți obligația să îi ajutați.',
+      'Este strict interzis să faceți ilegalități.',
+      'Medicii au obligația să furnizeze poliției bandaje gratuite și tot ce ține de sănătatea acesteia.',
+      'Este strict interzis, când sunteți on-duty, să refuzați tichete. Se pedepsește OOC.',
+      'Aveți voie să vindeți: bandaje — 5$, morfină pentru cai — 50$, telegrame — 2$.',
+      'Este strict interzis să teleportați jucătorii. Se pedepsește OOC.',
+      'Este strict interzis să ridicați persoanele cu mască în oraș.',
+      'Este strict interzis să ridicați persoanele cu membrele rupte sau capul spart.',
+      'Este strict interzis să ridicați poliția în timpul jafului — așteptați să plece banda din oraș.',
+      'Avansarea se face la 2 săptămâni, dacă directorul sau directorul adjunct consideră.',
+      'Medicul este obligat să vorbească cu liderul de bandă după ce se dă un jaf sau o bătaie (dacă a luat de la un cetățean), și abia după aceea poate interveni.',
+      'Este strict interzis să stați on-duty pe propria proprietate.',
+    ], banner:{type:'danger', text:'Atenție! Încălcarea acestor reguli se pedepsește cu ban!'}},
+
+    { title:'Doctor veterinar', rules:[
+      'Este obligatoriu să asculte de gradul mare.',
+      'Are voie să craftească morfină și să o vândă cetățenilor.',
+      'Este strict interzis să trateze oameni — doar animale.',
+      'Nu poate fi atacat — are imunitate, la fel ca ceilalți medici.',
+      'Nu are voie să facă lucruri ilegale. Se pedepsește OOC.',
+      'Are voie la vânătoare pe timpul zilei.',
+      'Noaptea trebuie să se plimbe pe câmp pentru a salva animale rănite în lupte.',
+      'Este obligatoriu să poarte ținuta albă pe timpul nopții.',
+    ]},
+  ]
+},
+
+{
+  id:'afaceri', title:'Regulament Afaceri', icon:'💰',
+  intro:'Reguli privind proprietățile, achiziția de afaceri, personalul obligatoriu și evenimentele săptămânale.',
+  groups:[
+    { title:'Reguli generale', rules:[
+      'Toate casele sunt listate pe site-ul oficial — pe Discord găsiți link-ul în canalul #shop.',
+      'Afacerile pot fi cumpărate IC sau pot fi incluse în pachetele din shop.',
+      'Un cetățean are voie să dețină două proprietăți și o afacere.',
+      'Aveți obligația ca, la afacere, în intervalul orar 19:00–22:00, să aveți minimum un angajat (maximum câți doriți) în locație. Dacă cei de la primărie, în frunte cu primarul, nu găsesc pe nimeni, veți primi amendă sau chiar suspendarea afacerii.',
+      'Proprietarii de afaceri au obligația să creeze săptămânal evenimente în locațiile lor. Dacă nu se organizează un eveniment, amenda se dublează de fiecare dată când lipsește.',
+    ]},
+  ]
+},
+
+{
+  id:'joburi', title:'Regulament Job-uri', icon:'🛠️',
+  intro:'Îndatoriri specifice pentru primar și reporter — de la administrarea afacerilor, până la interviuri și acoperirea știrilor.',
+  groups:[
+    { title:'Primar', rules:[
+      'Are obligația să controleze și să amendeze afacerile care nu au angajați în incintă, în intervalul orar 19:00–22:00.',
+      'Este strict interzis să iasă pe câmp cu poliția.',
+      'Este obligatoriu să fie calm și să ajute cetățenii, îndrumându-i în căutarea de joburi sau alte activități.',
+      'Poate fi răpit de bandiți, mafioți sau indieni — trebuie să roleze frica.',
+    ]},
+    { title:'Reporter', rules:[
+      'Este obligatoriu să caute zilnic știri pe care să le posteze IC și pe Discord, în camera de ziar.',
+      'Are voie să ia interviu bandelor sau mafiilor. Atenție: doar liderilor sau co-liderilor.',
+      'Este strict interzis să se supere dacă este luat la mișto de bande sau mafioți.',
+      'Este strict interzis să atace cetățenii — trebuie să roleze frica.',
+      'Este strict interzis să își schimbe ținuta.',
+      'Are voie să staționeze în fața secției de poliție și să ia interviu polițiștilor.',
+    ]},
+  ]
+},
+
+{
+  id:'streameri', title:'Regulament Streameri', icon:'🎥',
+  intro:'Reguli și beneficii pentru gradul de Streamer — exclusivitate, frecvența live-urilor și avantajele oferite de comunitate.',
+  groups:[
+    { title:'Reguli', rules:[
+      'Este strict interzis să vă faceți tichet dacă cineva se informează din live în timp ce faceți lucruri ilegale — aceste lucruri ilegale le puteți face și în afara programului de live.',
+      'Este strict interzis să insistați pe roleplay cu persoane care nu mai pot dezvolta acțiunea.',
+      'Oferiți exclusivitate serverului nostru — nu vrem să vedem live-uri pe alte servere de RedM. Puteți juca alte jocuri, dar vrem să vă vedem fideli.',
+      'Live-uri regulate: minimum 2 live-uri pe săptămână, de cel puțin 3 ore fiecare — algoritmii platformelor de streaming capătă încredere în voi ca să vă livreze spectatori.',
+      'Live-uri dedicate: toate live-urile anunțate în canalul de anunțuri trebuie să fie realizate pe serverul nostru, fără a promova alte servere sau alte jocuri.',
+      'Respect față de comunitate: orice comportament denigrator va duce la pierderea rolului de Streamer.',
+    ]},
+    { title:'Beneficii', rules:[
+      'Vă punem la dispoziție un cod promo (ex: REGAL) pe care jucătorii îl pot folosi pentru a primi -5% reducere la achiziția de pachete.',
+      'Acest grad îl oferim streamerilor de succes cu care ne dorim o colaborare apropiată — oferim posibilitatea de a câștiga bani reali sau gold în schimbul promovării serverului.',
+      'Oferă un conținut plăcut pentru urmăritorii tăi — nu este suficient doar să te filmezi în timp ce te joci; interacționează cu publicul și oferă-le divertisment.',
+      'Oferim suport în roleplay-uri avansate!',
+    ]},
+  ]
+},
+];
+
+/* ============ HELPERS ============ */
+function detectType(text){
+  const t = text.toLowerCase();
+  if(t.startsWith('este strict interzis') || t.startsWith('strict interzis') || /^nu (aveți|ai|are|au) voie/.test(t)) return 'interzis';
+  if(t.startsWith('aveți obligația') || t.startsWith('este obligatoriu') || t.startsWith('sunteți obligați') || t.startsWith('trebuie') || t.startsWith('este obligat')) return 'obligatie';
+  if(t.startsWith('aveți voie') || t.startsWith('are voie') || t.startsWith('au voie') || t.startsWith('poate fi') || t.startsWith('pot fi') || t.startsWith('puteți') || t.startsWith('se poate') || t.startsWith('poliția are dreptul') || t.startsWith('poliția poate') || t.startsWith('mafia are voie')) return 'permis';
+  return 'info';
+}
+/* Keyword highlighting — colors specific words/phrases inline instead of using tag pills.
+   Ordered from most specific to least specific: earlier entries win when patterns overlap. */
+const KEYWORDS = [
+  ['strict interzis', 'kw-penalty'],
+  ['este interzis', 'kw-penalty'],
+  ['ban permanent', 'kw-penalty'],
+  ['ban direct', 'kw-penalty'],
+  ['ban pe loc', 'kw-penalty'],
+  ['ban \\d+\\s*zil[ae]?', 'kw-penalty'],
+  ['suspendarea afacerii', 'kw-penalty'],
+  ['Character Kill', 'kw-penalty'],
+  ['\\bCK\\b', 'kw-penalty'],
+  ['pedepsește', 'kw-penalty'],
+  ['pedepsesc', 'kw-penalty'],
+  ['amendă', 'kw-penalty'],
+  ['amenda', 'kw-penalty'],
+  ['amendați', 'kw-penalty'],
+  ['amendeze', 'kw-penalty'],
+  ['\\bban\\b', 'kw-penalty'],
+
+  ['Excepți[ae]', 'kw-exception'],
+
+  ['\\d{1,2}\\s*:\\s*\\d{2}\\s*[–-]\\s*\\d{1,2}\\s*:\\s*\\d{2}', 'kw-time'],
+  ['\\d{1,2}\\s*:\\s*\\d{2}', 'kw-time'],
+  ['\\d+\\s*minute', 'kw-time'],
+  ['\\d+\\s*zile', 'kw-time'],
+  ['săptămânal[ae]?', 'kw-time'],
+  ['săptămânii', 'kw-time'],
+  ['săptămâni', 'kw-time'],
+  ['săptămână', 'kw-time'],
+  ['\\bzilnic\\b', 'kw-time'],
+  ['\\borele\\b', 'kw-time'],
+  ['\\bore\\b', 'kw-time'],
+  ['\\bora\\b', 'kw-time'],
+
+  ['jaf la morminte', 'kw-term'],
+  ['profanarea de morminte', 'kw-term'],
+  ['zon[ae] cimitir\\w*', 'kw-term'],
+  ['zon[aă] verde', 'kw-term'],
+  ['zona roșie', 'kw-term'],
+  ['Little Creek', 'kw-term'],
+  ['Blackwater', 'kw-term'],
+  ['Wapitti', 'kw-term'],
+  ['Guarma', 'kw-term'],
+  ['Sisika', 'kw-term'],
+  ['no-fear', 'kw-term'],
+  ['no fear', 'kw-term'],
+  ['power gaming', 'kw-term'],
+  ['revenge-kill', 'kw-term'],
+  ['lockpick', 'kw-term'],
+  ['deafen', 'kw-term'],
+  ['\\bmeta\\b', 'kw-term'],
+  ['\\bOOC\\b', 'kw-term'],
+  ['\\bIC\\b', 'kw-term'],
+];
+const KW_PATTERNS = KEYWORDS.map(k => '(' + k[0] + ')');
+const KW_CLASSES = KEYWORDS.map(k => k[1]);
+const KW_RE = new RegExp(KW_PATTERNS.join('|'), 'gi');
+
+function decorateBase(text){
+  const safe = escapeHtml(text);
+  return safe.replace(KW_RE, function(match, ...rest){
+    const caps = rest.slice(0, KW_CLASSES.length);
+    const idx = caps.findIndex(g => g !== undefined);
+    return idx === -1 ? match : `<span class="kw ${KW_CLASSES[idx]}">${match}</span>`;
+  });
+}
+function decorateWithSearch(text, tokens){
+  if(!tokens.length) return decorateBase(text);
+  const searchPatterns = tokens.map(t => '(' + escapeRegex(escapeHtml(t)) + ')');
+  const allPatterns = searchPatterns.concat(KW_PATTERNS);
+  const re = new RegExp(allPatterns.join('|'), 'gi');
+  const safe = escapeHtml(text);
+  return safe.replace(re, function(match, ...rest){
+    const caps = rest.slice(0, allPatterns.length);
+    const idx = caps.findIndex(g => g !== undefined);
+    if(idx === -1) return match;
+    if(idx < searchPatterns.length) return `<mark>${match}</mark>`;
+    return `<span class="kw ${KW_CLASSES[idx - searchPatterns.length]}">${match}</span>`;
+  });
+}
+function decorate(text, tokens){
+  return (tokens && tokens.length) ? decorateWithSearch(text, tokens) : decorateBase(text);
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function slug(...parts){
+  return parts.join('-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
+/* ============ RENDER ============ */
+const contentEl = document.getElementById('content');
+const sideNav = document.getElementById('sideNav');
+let totalRules = 0;
+
+const catIconOct = (icon) => `<span class="oct">${icon}</span>`;
+
+let navHtml = '';
+let contentHtml = '';
+
+DATA.forEach(cat => {
+  let catRuleCount = 0;
+  cat.groups.forEach(g => catRuleCount += g.rules.length);
+  totalRules += catRuleCount;
+
+  navHtml += `<li><a href="#${cat.id}" data-cat="${cat.id}">${catIconOct(cat.icon)}<span>${cat.title}</span><span class="badge-count">${catRuleCount}</span></a></li>`;
+
+  contentHtml += `<section class="category" id="${cat.id}" data-search-block>
+    <div class="category-head"><span class="cat-icon" aria-hidden="true">${cat.icon}</span><h2>${cat.title}</h2><span class="cat-count" data-total="${catRuleCount}">${catRuleCount} reguli</span></div>
+    <p class="category-intro">${cat.intro}</p>
+    <div class="category-divider"></div>`;
+
+  cat.groups.forEach((g, gi) => {
+    const gid = slug(cat.id, g.title, gi);
+    contentHtml += `<div class="group" id="${gid}" data-search-block>
+      <div class="group-title"><span>${g.title}</span><span class="group-count"></span><span class="line"></span></div>`;
+    if(g.intro){
+      contentHtml += `<p class="group-intro">${g.intro}</p>`;
+    }
+    contentHtml += `<ul class="rules">`;
+    g.rules.forEach((r, i) => {
+      const type = detectType(r);
+      contentHtml += `<li class="rule type-${type}" data-text="${escapeHtml(r.toLowerCase())}">
+        <span class="badge">${i+1}</span>
+        <div class="rule-body">
+          <p class="rule-text">${decorateBase(r)}</p>
+        </div>
+      </li>`;
+    });
+    contentHtml += `</ul>`;
+    if(g.banner){
+      contentHtml += `<div class="banner ${g.banner.type}"><svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.2 21 12 17.27 5.8 21 7 14.14l-5-4.87 7.1-1.01z"/></svg><p>${g.banner.text}</p></div>`;
+    }
+    contentHtml += `</div>`;
+  });
+
+  contentHtml += `</section>`;
+});
+
+sideNav.innerHTML = navHtml;
+contentEl.innerHTML = contentHtml;
+document.getElementById('statCats').textContent = DATA.length;
+document.getElementById('statRules').textContent = totalRules;
+
+/* ============ SEARCH ============ */
+const searchInput = document.getElementById('searchInput');
+const searchWrap = document.getElementById('searchWrap');
+const clearBtn = document.getElementById('clearBtn');
+const resultsCount = document.getElementById('resultsCount');
+const noResults = document.getElementById('noResults');
+const allRuleEls = Array.from(document.querySelectorAll('.rule'));
+const allGroupEls = Array.from(document.querySelectorAll('.group'));
+const allCatEls = Array.from(document.querySelectorAll('.category'));
+
+/* cache the original, un-highlighted text of every rule once */
+const ruleTextMap = new Map();
+allRuleEls.forEach(el => ruleTextMap.set(el, el.querySelector('.rule-text').textContent));
+
+function escapeRegex(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function runSearch(){
+  const raw = searchInput.value.trim().toLowerCase();
+  const tokens = raw.split(/\s+/).filter(Boolean);
+  const active = tokens.length > 0;
+
+  document.body.classList.toggle('is-searching', active);
+  searchWrap.classList.toggle('has-value', active);
+
+  let visibleCount = 0;
+
+  /* filter individual rules — a rule matches only if it contains every typed word */
+  allRuleEls.forEach(el => {
+    const text = el.dataset.text;
+    const match = !active || tokens.every(t => text.includes(t));
+    el.classList.toggle('hidden', !match);
+    const p = el.querySelector('.rule-text');
+    p.innerHTML = decorate(ruleTextMap.get(el), active && match ? tokens : []);
+    if(match) visibleCount++;
+  });
+
+  /* collapse groups (subdivisions) with zero matches, tag the ones that do match with a count */
+  allGroupEls.forEach(g => {
+    const visibleInGroup = g.querySelectorAll('.rule:not(.hidden)').length;
+    g.style.display = (!active || visibleInGroup > 0) ? '' : 'none';
+    const countEl = g.querySelector('.group-count');
+    if(countEl){
+      if(active && visibleInGroup > 0){
+        countEl.textContent = visibleInGroup + (visibleInGroup === 1 ? ' regulă' : ' reguli');
+        countEl.classList.add('show');
+      } else {
+        countEl.classList.remove('show');
+      }
+    }
+  });
+
+  /* collapse whole sections with zero matches, update their counter to reflect matches found */
+  allCatEls.forEach(c => {
+    const visibleInCat = c.querySelectorAll('.rule:not(.hidden)').length;
+    c.style.display = (!active || visibleInCat > 0) ? '' : 'none';
+    const countEl = c.querySelector('.cat-count');
+    if(countEl){
+      const total = countEl.dataset.total;
+      countEl.textContent = active
+        ? visibleInCat + (visibleInCat === 1 ? ' găsită' : ' găsite')
+        : total + ' reguli';
+    }
+  });
+
+  if(active){
+    resultsCount.textContent = visibleCount + (visibleCount === 1 ? ' regulă găsită' : ' reguli găsite');
+    resultsCount.classList.add('show');
+  } else {
+    resultsCount.classList.remove('show');
+  }
+  noResults.classList.toggle('show', active && visibleCount === 0);
+  document.querySelector('.hero').style.display = active ? 'none' : '';
+}
+
+searchInput.addEventListener('input', runSearch);
+clearBtn.addEventListener('click', () => { searchInput.value=''; runSearch(); searchInput.focus(); });
+document.addEventListener('keydown', (e) => {
+  if(e.key === '/' && document.activeElement !== searchInput){ e.preventDefault(); searchInput.focus(); }
+  if(e.key === 'Escape' && document.activeElement === searchInput){ searchInput.value=''; runSearch(); searchInput.blur(); }
+});
+
+/* ============ ACTIVE NAV ON SCROLL ============ */
+const navLinks = Array.from(document.querySelectorAll('#sideNav a'));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const id = entry.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.dataset.cat === id));
+    }
+  });
+}, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+allCatEls.forEach(c => observer.observe(c));
+
+/* ============ MOBILE SIDEBAR ============ */
+const sidebar = document.getElementById('sidebar');
+const menuToggle = document.getElementById('menuToggle');
+const overlay = document.getElementById('overlay');
+function closeSidebar(){ sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+menuToggle.addEventListener('click', () => { sidebar.classList.add('open'); overlay.classList.add('open'); });
+overlay.addEventListener('click', closeSidebar);
+sideNav.addEventListener('click', (e) => { if(e.target.closest('a')) closeSidebar(); });
+</script>
+</body>
+</html>
